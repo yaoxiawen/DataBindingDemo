@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!--绑定基本数据类型-->
+        <variable
+            name="content"
+            type="String" />
+
+        <variable
+            name="enabled"
+            type="boolean" />
+
+        <!--绑定model数据类型，通过import导入全路径，type可不写全路径，否则type需要写定全路径-->
+        <import type="com.example.databindingdemo.User" />
+
+        <variable
+            name="user"
+            type="User" />
+
+        <!--绑定事件接口-->
+        <variable
+            name="event"
+            type="com.example.databindingdemo.EventListener" />
+
+        <variable
+            name="title1"
+            type="String" />
+
+        <variable
+            name="title2"
+            type="String" />
+
+        <variable
+            name="title3"
+            type="String" />
+
+        <variable
+            name="title4"
+            type="String" />
+
+        <!--绑定静态方法，导入包-->
+        <import type="com.example.databindingdemo.Utils" />
+
+        <!--绑定list/map等集合数据，需要写全路径或者import导入-->
+        <import type="java.util.ArrayList" />
+
+        <variable
+            name="list"
+            type="ArrayList&lt;String>" />
+        <!--泛型的支持会在编译时期报红线，但是是可以直接运行的
+        但是需要通过转义字符才行，如：&lt;数据类型> 或者&lt;数据类型&gt;-->
+
+        <import type="java.util.Map" />
+
+        <variable
+            name="map"
+            type="Map&lt;String,String&gt;" />
+
+        <variable
+            name="arrays"
+            type="String[]" />
+
+        <!--Observable数据改变自动更新-->
+        <variable
+            name="observableModel"
+            type="com.example.databindingdemo.ObservableModel" />
+
+        <variable
+            name="observableList"
+            type="androidx.databinding.ObservableArrayList&lt;String&gt;" />
+
+        <variable
+            name="observableMap"
+            type="androidx.databinding.ObservableArrayMap&lt;String,String&gt;" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--通过@{}来绑定数据-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="绑定基本数据类型"/>
+
+            <Button
+                android:id="@+id/bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="@{enabled}"
+                android:text="@{content}"/>
+
+            <!--分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="绑定model数据类型" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{user.name}" />
+
+            <TextView
+                android:id="@+id/tv_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- boolean 要转为String来显示 不然编译异常-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(user.isMale)}" />
+
+            <!-- age是int类型 必须转化为String 不然编译异常-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(user.age)}" />
+
+            <!--分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="绑定事件接口" />
+
+            <!--event.onClick1引用方式已废弃，建议使用event::onClick1方式-->
+            <Button
+                android:id="@+id/bt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{event.onClick1}"
+                android:text="@{title1}" />
+
+            <Button
+                android:id="@+id/bt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{event::onClick2}"
+                android:text="@{title2}" />
+
+            <Button
+                android:id="@+id/bt3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->event.onClick3(title4)}"
+                android:text="@{title3}" />
+
+            <!--分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="绑定静态方法" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Utils.getContent(user)}" />
+
+            <!--分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="运算符操作数据" />
+            <!--简单运算符操作数据
+            使用``包裹的字符串可用作拼接字符串
+            -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{`拼接了`+user.name}" />
+
+            <!--分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="绑定list/map等集合数据" />
+            <!--List集合既可以和数组一样通过索引获取值list[index]方式，也可以调用API-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{list[0]}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{list.get(1)}" />
+
+            <!--Map集合既可以通过map[key]的方式，也可以通过调用API-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{map[`name`]}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{map.get(`name`)}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{arrays[0]}" />
+
+            <!--分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔分隔-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#C8C8C8"
+                android:text="Observable数据改变自动更新" />
+
+            <Button
+                android:id="@+id/bt_observable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点击进行数据更新" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{observableModel.field}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(observableModel.age)}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{observableList[0]}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{observableMap[`name`]}" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>
